@@ -13,10 +13,10 @@ def main():
         print(f'Image {img_path} loaded successfully')
 
         # Call function here
-        img_4bit = bv.rescale_greylevels(img)
+        new_img = bv.smooth_mean(img, 21, True)
 
         # Plot image
-        plt.imshow(img_4bit, cmap='gray', vmin=0, vmax=15)
+        plt.imshow(new_img, cmap='gray', vmin=0, vmax=255)
         plt.colorbar()
         plt.show()
 

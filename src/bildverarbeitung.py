@@ -4,6 +4,8 @@ import numpy as np
 
 def rescale_greylevels(src, g_values=16):
     """
+    Foliensatz: MuML_BV_01d_Bilder_und_Bildeigenschaften
+    Folie: 20
     Rescales the grey levels of a greyscale image to a specified number of discrete grey values.
 
     This function maps the pixel values of a greyscale image to `g_values` uniformly distributed levels
@@ -25,3 +27,45 @@ def rescale_greylevels(src, g_values=16):
 
     return img
 
+
+def smooth_mean(src, kernel_size=3, fast=False):
+    """
+    Foliensatz: MuML_BV_01d_Bilder_und_Bildeigenschaften
+    Folie: 22
+    Applies mean filtering (smoothing) to a greyscale image using a square kernel.
+
+    The function supports two modes:
+    - Manual implementation (slow but educational), using nested loops and wrapping borders
+    - Fast mode using OpenCV's built-in cv2.blur function
+
+    The filter computes the mean value of a square neighborhood of size `kernel_size × kernel_size`
+    for each pixel and replaces the center pixel with that mean. Wrapping is used at the image borders
+    to simulate circular boundary behavior.
+
+    :param src: Input greyscale image as a NumPy array (dtype: uint8)
+    :param kernel_size: Size of the smoothing kernel (must be odd), default is 3
+    :param fast: If True, uses OpenCV's cv2.blur for faster execution;
+                 if False, uses manual implementation (default: False)
+    :return: Smoothed image as a NumPy array (same shape and dtype as input)
+    """
+    img = src.copy()
+
+    pad = kernel_size // 2
+
+    padded = cv2.copyMakeBorder(img, top=pad, bottom=pad, left=pad, right=pad, borderType=cv2.BORDER_WRAP)
+
+    if not fast:
+        rows, columns = img.shape[:2]
+
+        for row in range(rows):
+            for column in range(columns):
+                mean = 0.0
+                for i in range(kernel_size):
+                    for j in range(kernel_size):
+                        mean += padded[row + i, column + j]
+                mean = mean / (kernel_size ** 2)
+                img[row, column] = int(round(mean))
+    else:
+        img = cv2.blur(img, (kernel_size, kernel_size))
+
+    return img
