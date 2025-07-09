@@ -118,6 +118,19 @@ def set_contrast(src, gain):
 
 
 def get_hist(src):
+    """
+    Foliensatz: MuML_BV_01d_Bilder_und_Bildeigenschaften
+    Folie: 26
+    Extracts all greyscale pixel values from the input image into a flat list.
+
+    This function iterates over each pixel in the image and returns a list of their values.
+    It is typically used to generate histogram data (e.g., with matplotlib).
+
+    Note: The image is assumed to be a single-channel greyscale image.
+
+    :param src: Input greyscale image as a NumPy array (dtype: uint8)
+    :return: List of pixel values (integers from 0 to 255)
+    """
     img = src.copy()
 
     rows, columns = img.shape[:2]
