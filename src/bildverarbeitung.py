@@ -117,3 +117,17 @@ def set_contrast(src, gain):
     return img.astype(np.uint8)
 
 
+def get_hist(src):
+    img = src.copy()
+
+    rows, columns = img.shape[:2]
+
+    histogram = []
+
+    for row in range(rows):
+        for column in range(columns):
+            histogram.append(img[row, column])
+
+    return histogram
+
+

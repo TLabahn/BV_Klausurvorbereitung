@@ -13,11 +13,21 @@ def main():
         print(f'Image {img_path} loaded successfully')
 
         # Call function here
-        new_img = bv.set_contrast(img, 10)
+        # new_img = bv.set_contrast(img, 10)
 
         # Plot image
-        plt.imshow(new_img, cmap='gray', vmin=0, vmax=255)
-        plt.colorbar()
+        # plt.imshow(new_img, cmap='gray', vmin=0, vmax=255)
+        # plt.colorbar()
+        # plt.show()
+
+        values = bv.get_hist(img)
+
+        # Plot
+        plt.hist(values, bins=256, range=(0, 256), color='gray')
+        plt.title("Histogram of Greyscale Values")
+        plt.xlabel("Grey Value")
+        plt.ylabel("Pixel Count")
+        plt.grid(True)
         plt.show()
 
     else:
