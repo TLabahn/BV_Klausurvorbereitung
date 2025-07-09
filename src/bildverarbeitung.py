@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def rescale_greylevels(src, g_values=16):
@@ -69,3 +70,50 @@ def smooth_mean(src, kernel_size=3, fast=False):
         img = cv2.blur(img, (kernel_size, kernel_size))
 
     return img
+
+
+def set_contrast(src, gain):
+    """
+    Foliensatz: MuML_BV_01d_Bilder_und_Bildeigenschaften
+    Folie: 25
+    Adjusts the contrast of a greyscale image using a linear contrast transformation.
+
+    The contrast is modified by scaling each pixel value relative to the image's mean grey level:
+    new_value = (value - mean) * gain + mean
+
+    - If gain > 1: contrast is increased (dark gets darker, bright gets brighter)
+    - If gain < 1: contrast is reduced (image becomes flatter)
+    - If gain = 1: no change
+
+    After the transformation, pixel values are clipped to the valid range [0, 255].
+
+    A histogram of the resulting image is displayed using matplotlib.
+
+    :param src: Input greyscale image as a NumPy array (dtype: uint8)
+    :param gain: Contrast scaling factor (float > 0)
+    :return: Contrast-adjusted image as a NumPy array (dtype: uint8)
+    """
+    img = src.astype(np.float32)
+
+    rows, columns = img.shape
+    mean = 0.0
+    for row in range(rows):
+        for column in range(columns):
+            mean += img[row, column]
+    mean = mean / (rows * columns)
+
+    for row in range(rows):
+        for column in range(columns):
+            img[row, column] = (img[row, column] - mean) * gain + mean
+
+    img = np.clip(img, 0, 255)
+
+    plt.hist(img.ravel(), bins=256, range=(0, 256))
+    plt.title("Histogramm")
+    plt.xlabel("Grauwert")
+    plt.ylabel("Anzahl Pixel")
+    plt.show()
+
+    return img.astype(np.uint8)
+
+

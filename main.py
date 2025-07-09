@@ -13,7 +13,7 @@ def main():
         print(f'Image {img_path} loaded successfully')
 
         # Call function here
-        new_img = bv.smooth_mean(img, 21, True)
+        new_img = bv.set_contrast(img, 10)
 
         # Plot image
         plt.imshow(new_img, cmap='gray', vmin=0, vmax=255)
