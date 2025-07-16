@@ -30,7 +30,7 @@ def main():
         # plt.grid(True)
         # plt.show()
 
-        bv.aufgabe_1()
+        bv.aufgabe_3()
 
     else:
         print(f'Bild {img_path} konnte nicht geladen werden.')

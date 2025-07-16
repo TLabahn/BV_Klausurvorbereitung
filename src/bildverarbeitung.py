@@ -191,6 +191,52 @@ def aufgabe_1():
           f'Histogram: {hist}\n'
           f'Graustufen: {graustufen}')
 
+def aufgabe_3():
+    # Binärbild mit 0 und 1
+    img = np.array([[1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 0],
+                    [1, 1, 1, 0, 0],
+                    [0, 0, 0, 1, 1],
+                    [1, 0, 0, 1, 1]], dtype=np.uint8)
+
+    # In 0–255 umwandeln für OpenCV
+    img = img * 255
+
+    # 3x3 Rechteckstruktur
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+
+    # Opening mit Zero Padding
+    opened = cv2.morphologyEx(
+        img,
+        cv2.MORPH_OPEN,
+        kernel,
+        borderType=cv2.BORDER_CONSTANT,
+        borderValue=0
+    )
+
+    # Top-Hat mit Zero Padding
+    tophat = cv2.morphologyEx(
+        img,
+        cv2.MORPH_TOPHAT,
+        kernel,
+        borderType=cv2.BORDER_CONSTANT,
+        borderValue=0
+    )
+
+    # Plotten
+    titles = ['Original', 'Opening', 'Top-Hat']
+    images = [img, opened, tophat]
+
+    plt.figure(figsize=(10, 3))
+    for i in range(3):
+        plt.subplot(1, 3, i + 1)
+        plt.imshow(images[i], cmap='gray', vmin=0, vmax=255)
+        plt.title(titles[i])
+        plt.axis('off')
+    plt.tight_layout()
+    plt.show()
+
+
 
 
 
