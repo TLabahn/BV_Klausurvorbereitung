@@ -144,3 +144,57 @@ def get_hist(src):
     return histogram
 
 
+def aufgabe_1():
+    img = np.array([[0, 2, 1, 3, 0],
+                    [0, 2, 3, 2, 2],
+                    [0, 0, 0, 3, 0],
+                    [0, 0, 1, 3, 0],
+                    [0, 1, 2, 1, 0]])
+    img = img.astype(np.uint8)
+
+    hist = cv2.calcHist(
+        images=[img],
+        channels=[0],
+        mask=None,
+        histSize=[4],
+        ranges=[0, 4]
+    )
+    hist = hist.flatten()
+
+    t = 1
+    N = np.sum(hist[:])
+    N_H = np.sum(hist[:t])
+    N_V = np.sum(hist[t:])
+
+    W_H = N_H / N
+    W_V = N_V / N
+
+    graustufen = np.arange(len(hist))
+    mu_H = np.sum(graustufen[:t] * hist[:t]) / N_H
+    mu_V = np.sum(graustufen[t:] * hist[t:]) / N_V
+
+    sigma2H = np.sum((graustufen[:t] - mu_H) ** 2 * hist[:t]) / N_H
+    sigma2V = np.sum((graustufen[t:] - mu_V) ** 2 * hist[t:]) / N_V
+
+    sigma2W = W_H * sigma2H + W_V * sigma2V
+
+    print(f'N: {N}\n'
+          f'N_H: {N_H}\n'
+          f'N_V: {N_V}\n'
+          f'W_H: {W_H}\n'
+          f'W_V: {W_V}\n'
+          f'mu_H: {mu_H}\n'
+          f'mu_V: {mu_V}\n'
+          f'sigma2H: {sigma2H}\n'
+          f'sigma2V: {sigma2V}\n'
+          f'sigma2W: {sigma2W}\n'
+          f'Histogram: {hist}\n'
+          f'Graustufen: {graustufen}')
+
+
+
+
+
+
+
+

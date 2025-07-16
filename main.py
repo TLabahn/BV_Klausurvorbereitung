@@ -20,15 +20,17 @@ def main():
         # plt.colorbar()
         # plt.show()
 
-        values = bv.get_hist(img)
+        # values = bv.get_hist(img)
 
         # Plot
-        plt.hist(values, bins=256, range=(0, 256), color='gray')
-        plt.title("Histogram of Greyscale Values")
-        plt.xlabel("Grey Value")
-        plt.ylabel("Pixel Count")
-        plt.grid(True)
-        plt.show()
+        # plt.hist(values, bins=256, range=(0, 256), color='gray')
+        # plt.title("Histogram of Greyscale Values")
+        # plt.xlabel("Grey Value")
+        # plt.ylabel("Pixel Count")
+        # plt.grid(True)
+        # plt.show()
+
+        bv.aufgabe_1()
 
     else:
         print(f'Bild {img_path} konnte nicht geladen werden.')
